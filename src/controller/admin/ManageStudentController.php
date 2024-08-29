@@ -33,7 +33,23 @@ class ManageStudentController
         try {
             $studentModel = self::getBaseModel();
             $student = $studentModel->find();
-            $res->status(200)->render(self::BASE_URL . "/screen.view.php", ["student" => $student]);
+
+            $transformed_student_list = array_map(function ($student) {
+                $departmentModel = new Model("DEPARTMENT");
+                $courseModel = new Model("COURSE");
+
+                $course_credentials = $courseModel->findOne(["ID" => $student["COURSE"]]);
+                $department_credentials = $departmentModel->findOne(["DEPARTMENT_ID" => $student["DEPARTMENT"]]);
+
+                return [
+                    ...$student,
+                    "COURSE_NAME" => $course_credentials["NAME"],
+                    "DEPARTMENT_NAME" => $department_credentials["DEPARTMENT_NAME"]
+                ];
+
+            }, $student);
+
+            $res->status(200)->render(self::BASE_URL . "/screen.view.php", ["student" => $transformed_student_list]);
 
         } catch (\Exception $e) {
             $res->status(500)->json(["error" => "Failed to fetch student: " . $e->getMessage()]);
@@ -113,6 +129,7 @@ class ManageStudentController
         $phone_number = $req->body["PHONE_NUMBER"] ?? null;
 
         $student_model = self::getBaseModel();
+
 
 
         // Check if the student exist

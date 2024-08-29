@@ -19,14 +19,14 @@ require from("views/helper/partials/sidebar.partials.php");
                     </div>
                     <div
                         class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                        <a href="/student/create" type="button"
+                        <a href="/batch/create" type="button"
                             class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                             <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path clip-rule="evenodd" fill-rule="evenodd"
                                     d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                             </svg>
-                            Add Student
+                            Add Batch
                         </a>
 
                     </div>
@@ -35,54 +35,52 @@ require from("views/helper/partials/sidebar.partials.php");
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="px-4 py-3">ID</th>
-                                <th scope="col" class="px-4 py-3">First name</th>
-                                <th scope="col" class="px-4 py-3">Last name</th>
-                                <th scope="col" class="px-4 py-3">Email</th>
-                                <th scope="col" class="px-4 py-3">Department</th>
-                                <th scope="col" class="px-4 py-3">Course</th>
-                                <th scope="col" class="px-4 py-3">Year level</th>
+                                <th scope="col" class="px-4 py-3">Name</th>
+                                <th scope="col" class="px-4 py-3">Date</th>
+                                <th scope="col" class="px-4 py-3">Capacity</th>
+                                <th scope="col" class="px-4 py-3">Status</th>
                                 <th scope="col" class="px-4 py-3 text-center">
                                     <span>Actions</span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($student as $items): ?>
+                            <?php foreach ($batch as $items): ?>
                                 <tr class="border-b dark:border-gray-700">
                                     <th scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        # <?= $items["STUDENT_ID"] ?>
-                                    </th>
-                                    <th scope="row"
-                                        class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <?= $items["FIRST_NAME"] ?>
+                                        <?= $items["BATCH_NAME"] ?>
                                     </th>
                                     <td class="px-4 py-3">
-                                        <?= $items["LAST_NAME"] ?>
+                                        <?= $items["BOOKING_DATE"] ?>
                                     </td>
                                     <td class="px-4 py-3">
-                                        <?= $items["EMAIL"] ?>
+                                        <?= $items["MAX_STUDENT"] ?>
                                     </td>
-
                                     <td class="px-4 py-3">
-                                        <?= $items["DEPARTMENT_NAME"] ?>
+                                        <?= $items["STATUS"] ?>
                                     </td>
 
-                                    <td class="px-4 py-3">
-                                        <?= $items["COURSE_NAME"] ?>
-                                    </td>
+                                    <td class=" flex justify-center items-center">
 
+                                        <?php if ($items["STATUS"] !== "DONE"): ?>
+                                            <a href="/batch/session/start?id=<?= $items["BATCH_ID"] ?>" type="button"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18'
+                                                    viewBox='0 0 24 24'>
+                                                    <title>play_fill</title>
+                                                    <g id="play_fill" fill='none' fill-rule='evenodd'>
+                                                        <path
+                                                            d='M24 0v24H0V0h24ZM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01-.184-.092Z' />
+                                                        <path fill='currentColor'
+                                                            d='M5.669 4.76a1.469 1.469 0 0 1 2.04-1.177c1.062.454 3.442 1.533 6.462 3.276 3.021 1.744 5.146 3.267 6.069 3.958.788.591.79 1.763.001 2.356-.914.687-3.013 2.19-6.07 3.956-3.06 1.766-5.412 2.832-6.464 3.28-.906.387-1.92-.2-2.038-1.177-.138-1.142-.396-3.735-.396-7.237 0-3.5.257-6.092.396-7.235Z' />
+                                                    </g>
+                                                </svg>
+                                                <span class="sr-only">Icon description</span>
+                                            </a>
+                                        <?php endif; ?>
 
-                                    <td class="px-4 py-3 space-x-4">
-                                        <?= $items["YEARLEVEL"] ?>
-                                        <span>Year</span>
-                                    </td>
-
-                                    <td class=" flex justify-center items-center ">
-
-
-                                        <a href="/student/update?id=<?= $items["ID"] ?>" type="button"
+                                        <a href="/batch/update?id=<?= $items["BATCH_ID"] ?>" type="button"
                                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                             <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18'
                                                 viewBox='0 0 24 24'>
@@ -97,7 +95,7 @@ require from("views/helper/partials/sidebar.partials.php");
                                             <span class="sr-only">Icon description</span>
                                         </a>
 
-                                        <button type="button" data-delete-id="<?= $items["ID"] ?>"
+                                        <button type="button" data-delete-id="<?= $items["BATCH_ID"] ?>"
                                             class="delete-modal-btn text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                             <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18'
                                                 viewBox='0 0 24 24'>
@@ -111,6 +109,7 @@ require from("views/helper/partials/sidebar.partials.php");
                                             </svg>
                                             <span class="sr-only">Icon description</span>
                                         </button>
+
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -177,7 +176,7 @@ require from("views/helper/partials/sidebar.partials.php");
     </section>
 </main>
 
-<?php display("views/helper/components/ui/DeleteModal.php", ["route" => "/student/delete"]) ?>
+<?php display("views/helper/components/ui/DeleteModal.php", ["route" => "/batch/delete"]) ?>
 
 <!-- Script -->
 <?php require from("views/helper/components/script/response.script.php"); ?>

@@ -94,7 +94,7 @@ require from("views/helper/partials/sidebar.partials.php");
                     <div>
                         <label for="DEPARTMENT"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
-                        <select name="DEPARTMENT_ID" id="DEPARTMENT"
+                        <select name="DEPARTMENT" id="DEPARTMENT"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             required>
                             <option disabled selected>Select your Department</option>
@@ -107,7 +107,7 @@ require from("views/helper/partials/sidebar.partials.php");
                     <div>
                         <label for="COURSE"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
-                        <select name="COURSE_ID" id="COURSE"
+                        <select name="COURSE" id="COURSE"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             required>
                             <option disabled selected>Select Course</option>
