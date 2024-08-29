@@ -53,17 +53,19 @@ class StudentController
     public static function renderBooking(Request $req, Response $res)
     {
         $currentID = $_SESSION["UID"];
+    
+        $studentModel = new Model("STUDENT");
+        $batchModel = new Model("BATCHES");
 
-        $credentials = (new Model("STUDENT"))->find(["ID" => $currentID], ["select" => "YEARLEVEL"]);
-        $booking_list = (new Model("BATCHES"))->find(["#or" => ["STATUS" => "Active",]]);
+        $student_credentials = $studentModel->findOne(["ID" => $currentID], ["select" => "DEPARTMENT, YEARLEVEL"]);
+        $booking_list = $batchModel->find(["DEPARTMENT_ID" => $student_credentials["DEPARTMENT"]]);
 
-        $updated_booking_list = array_filter($booking_list, function ($item) use ($credentials) {
-            return $item["STATUS"] === "Active" &&
-                (substr($item["YEARLEVEL"], 0, 1) === substr($credentials["YEARLEVEL"], 0, 1) ||
-                    $item["YEARLEVEL"] === "1st");
+        $filtered_booking_list = array_filter($booking_list, function ($item) use ($student_credentials) {
+            return $item["YEARLEVEL"] === $student_credentials["YEARLEVEL"] || $item["YEARLEVEL"] === "all";
         });
 
-        $res->status(200)->render("views/student/booking/screen.view.php", ["booking" => $updated_booking_list]);
+
+        $res->status(200)->render("views/student/booking/screen.view.php", ["booking" => $filtered_booking_list]);
     }
 
     public static function renderApplicationForm(Request $req, Response $res)

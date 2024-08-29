@@ -1,6 +1,7 @@
 <?php
 use controller\admin\AdminController;
 
+use controller\admin\CourseController;
 use controller\admin\ManageBookingController;
 use controller\admin\ManageQueuesController;
 use lib\Router\classes\Request;
@@ -14,7 +15,8 @@ use controller\admin\ManageDepartmentController;
 
 $router = Express::Router();
 
-$router->get("/", fn(Request $req, Response $res) => AdminController::renderDashboard($req, $res));
+$router->get("/", fn(Request $req, Response $res) => ManageBookingController::renderScreen($req, $res));
+
 
 /**Booking Routes */
 $router->get("/booking", fn(Request $req, Response $res) => ManageBookingController::renderScreen($req, $res));
@@ -69,3 +71,15 @@ $router->get("/operator/update", fn(Request $req, Response $res) => ManageOperat
 $router->post("/operator/create", fn(Request $req, Response $res) => ManageOperatorController::createOperator($req, $res));
 $router->delete("/operator/delete", fn(Request $req, Response $res) => ManageOperatorController::deleteOperator($req, $res));
 $router->put("/operator/update", fn(Request $req, Response $res) => ManageOperatorController::updateOperator($req, $res));
+
+
+
+// course
+$router->get("/course", fn(Request $req, Response $res) => CourseController::renderScreen($req, $res));
+$router->get("/course/create", fn(Request $req, Response $res) => CourseController::renderCreatePage($req, $res));
+$router->get("/course/update", fn(Request $req, Response $res) => CourseController::renderUpdatePage($req, $res));
+
+
+// Course Actions
+$router->post("/course/create", fn(Request $req, Response $res) => CourseController::createCourse($req, $res));
+$router->delete("/course/delete", fn(Request $req, Response $res) => CourseController::deleteCourse($req, $res));

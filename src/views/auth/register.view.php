@@ -1,19 +1,14 @@
 <?php require from("views/helper/partials/head.partials.php"); ?>
 
 <main class="w-full min-h-screen">
-    <section class="bg-gray-50 dark:bg-gray-900">
-        <div class="flex justify-center items-center flex-col py-12">
-            <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-                    alt="logo">
-                Logo
-            </a>
+    <section class="bg-gray-50 dark:bg-gray-900 flex justify-center items-center min-h-screen h-full">
+        <div class="flex justify-center items-center flex-col py-12 h-full flex justify-center items-center">
             <div
-                class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-3xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-3xl xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1
                         class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
-                        Activate your Account
+                        Register your Account
                     </h1>
 
                     <!-- Registration Form -->
@@ -99,73 +94,56 @@
                             </div>
 
                             <div class="grid grid-cols-2 gap-4">
-                                <!-- Course -->
-                                <div>
-                                    <label for="COURSE"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                        Course</label>
-                                    <input type="text" name="COURSE" id="COURSE"
-                                        class="input input-bordered bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Enter your email" required>
-                                </div>
-
-                                <!-- Department -->
-                                <div>
-                                    <label for="DEPARTMENT"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                        Department</label>
-                                    <select name="DEPARTMENT" id="DEPARTMENT"
-                                        class="select select-bordered w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        required>
-                                        <option disabled selected>Select your Department</option>
-                                        <option value="CAS">College of Arts and Science</option>
-                                        <option value="CENG">College of Engineering</option>
-                                        <option value="CA">College of Agriculture</option>
-                                        <option value="CA">College of Agriculture</option>
-
-                                    </select>
-                                </div>
-
-                                <!-- Yearlevel -->
-                                <div>
-                                    <label for="YEARLEVEL"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                        Year level</label>
-                                    <select name="YEARLEVEL" id="YEARLEVEL"
-                                        class="select select-bordered w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        required>
-                                        <option disabled selected>Select your Year level</option>
-                                        <option value="1">1st year</option>
-                                        <option value="2">2nd Year</option>
-                                        <option value="3">3rd Year</option>
-                                        <option value="4">4th Year</option>
-
-                                    </select>
-                                </div>
-
-
-                            </div>
-
-
-
+                       
+                       <div>
+                           <label for="DEPARTMENT"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
+                           <select name="DEPARTMENT" id="DEPARTMENT"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                               required>
+                               <option disabled selected>Select your Department</option>
+                               <?php foreach ($departmentList as $department): ?>
+                                   <option value="<?= $department["DEPARTMENT_ID"] ?>"><?= $department["DEPARTMENT_NAME"] ?></option>
+                               <?php endforeach; ?>
+                           </select>
+                       </div>
+   
+                       <div>
+                           <label for="COURSE"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
+                           <select name="COURSE" id="COURSE"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                               required>
+                               <option disabled selected>Select Course</option>
+                               <?php foreach ($courseList as $items): ?>
+                                   <option data-department="<?= $items["DEPARTMENT_ID"] ?>" value="<?= $items["ID"] ?>"><?= $items["NAME"] ?></option>
+                               <?php endforeach; ?>
+                           </select>
+                       </div>
+   
+   
+                           <!-- Yearlevel -->
+                           <div>
+                               <label for="YEARLEVEL" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                   Year level</label>
+                               <select name="YEARLEVEL" id="YEARLEVEL"
+                                   class="select select-bordered w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   required>
+                                   <option disabled selected>Select your Year level</option>
+                                   <option value="1">1st year</option>
+                                   <option value="2">2nd Year</option>
+                                   <option value="3">3rd Year</option>
+                                   <option value="4">4th Year</option>
+   
+                               </select>
+                           </div>
+                       </div>
                         </div>
 
 
 
                         <div class="flex justify-center items-center flex-col gap-4">
-                            <div class="flex items-start">
-                                <div class="flex items-center h-5">
-                                    <input id="terms" aria-describedby="terms" type="checkbox"
-                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                                        required="">
-                                </div>
-                                <div class="ml-3 text-sm">
-                                    <label for="terms" class="font-light text-gray-500 dark:text-gray-300">I accept the
-                                        <a class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                                            href="#">Terms and Conditions</a></label>
-                                </div>
-                            </div>
-
+                           
                             <button type="submit"
                                 class="btn w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 max-w-sm">Create
                                 an account</button>
@@ -181,6 +159,40 @@
         </div>
     </section>
 </main>
+
+
+<script>
+$(document).ready(function(){
+    const department = $("#DEPARTMENT");
+    const courseSelection = $("#COURSE");
+
+    department.on("change", function(event){
+        const selectedDepartment = $(this).val();
+        const courseOptions = $('#COURSE option');
+
+        courseOptions.hide();
+        courseSelection.val("Select Course");
+
+
+        if(selectedDepartment){
+
+
+            courseOptions.filter(function() {
+                return $(this).data('department') == selectedDepartment;
+            }).show();
+
+            console.log(courseOptions);
+
+        } else {
+            courseOptions.show();
+        }
+    });
+
+    courseSelection.on("change", function(event){
+        const selectedCourse = $(this).val();
+    });
+});
+</script>
 
 <?php require from("views/helper/components/script/response.script.php");
 require from("views/helper/partials/footer.partials.php") ?>

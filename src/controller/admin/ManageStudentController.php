@@ -49,8 +49,14 @@ class ManageStudentController
      */
     public static function renderCreatePage(Request $req, Response $res)
     {
+        $departmentModel = new Model("DEPARTMENT");
+        $courseModel = new Model("COURSE");
 
-        $res->status(200)->render(self::BASE_URL . "/pages/create.page.php", ["roles" => self::ROLES]);
+        $department_list = $departmentModel->find([]);
+        $course_list = $courseModel->find([]);
+
+        $res->status(200)->render(self::BASE_URL . "/pages/create.page.php", ["roles" => self::ROLES,   "departmentList" => $department_list,
+        "courseList" => $course_list,]);
     }
 
 
@@ -66,10 +72,13 @@ class ManageStudentController
             $UID = $req->query["id"];
 
             $studentModel = self::getBaseModel();
+          
 
-            $crendtials = $studentModel->findOne(["ID" => $UID]);
+            $credentials = $studentModel->findOne(["ID" => $UID]);
+          
 
-            if (!$crendtials) {
+
+            if (!$credentials) {
                 $res->status(400)->redirect("/student/update?id=" . $UID, ["error" => "Student already exist"]);
             }
 
@@ -77,7 +86,8 @@ class ManageStudentController
                 self::BASE_URL . "/pages/update.page.php",
                 [
                     "UID" => $UID,
-                    "details" => $crendtials,
+                  
+                    "details" => $credentials,
                     "roles" => self::ROLES
                 ]
             );

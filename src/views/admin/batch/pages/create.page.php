@@ -72,10 +72,10 @@ require from("views/helper/partials/sidebar.partials.php");
                             required>
                             <option disabled selected>Select year level </option>
                             <option value="all">All</option>
-                            <option value="1st"> 1st year</option>
-                            <option value="2nd"> 2nd year</option>
-                            <option value="3rd"> 3rd year</option>
-                            <option value="4th"> 4th year</option>
+                            <option value="1"> 1st year</option>
+                            <option value="2"> 2nd year</option>
+                            <option value="3"> 3rd year</option>
+                            <option value="4"> 4th year</option>
                         </select>
                     </div>
 

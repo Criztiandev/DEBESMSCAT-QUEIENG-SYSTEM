@@ -38,7 +38,12 @@ class AuthController
      */
     public static function registerScreen(Request $req, Response $res)
     {
-        $res->status(200)->render("views/auth/register.view.php");
+         $departmentModel = new Model("DEPARTMENT");
+        $courseModel = new Model("COURSE");
+
+        $department_list = $departmentModel->find([]);
+        $course_list = $courseModel->find([]);
+        $res->status(200)->render("views/auth/register.view.php",["departmentList" => $department_list, "courseList" => $course_list]);
     }
 
 

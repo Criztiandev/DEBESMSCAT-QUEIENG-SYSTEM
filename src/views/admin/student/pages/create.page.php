@@ -90,31 +90,33 @@ require from("views/helper/partials/sidebar.partials.php");
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
-                        <!-- Course -->
-                        <div>
-                            <label for="COURSE" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Course</label>
-                            <input type="text" name="COURSE" id="COURSE"
-                                class="input input-bordered bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Enter your email" required>
-                        </div>
+                       
+                    <div>
+                        <label for="DEPARTMENT"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
+                        <select name="DEPARTMENT_ID" id="DEPARTMENT"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            required>
+                            <option disabled selected>Select your Department</option>
+                            <?php foreach ($departmentList as $department): ?>
+                                <option value="<?= $department["DEPARTMENT_ID"] ?>"><?= $department["DEPARTMENT_NAME"] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-                        <!-- Department -->
-                        <div>
-                            <label for="DEPARTMENT"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Department</label>
-                            <select name="DEPARTMENT" id="DEPARTMENT"
-                                class="select select-bordered w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required>
-                                <option disabled selected>Select your Department</option>
-                                <option value="CAS">College of Arts and Science</option>
-                                <option value="CENG">College of Engineering</option>
-                                <option value="CA">College of Agriculture</option>
-                                <option value="CA">College of Agriculture</option>
+                    <div>
+                        <label for="COURSE"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
+                        <select name="COURSE_ID" id="COURSE"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            required>
+                            <option disabled selected>Select Course</option>
+                            <?php foreach ($courseList as $items): ?>
+                                <option data-department="<?= $items["DEPARTMENT_ID"] ?>" value="<?= $items["ID"] ?>"><?= $items["NAME"] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-                            </select>
-                        </div>
 
                         <!-- Yearlevel -->
                         <div>
@@ -153,6 +155,38 @@ require from("views/helper/partials/sidebar.partials.php");
     </section>
 </main>
 
+<script>
+$(document).ready(function(){
+    const department = $("#DEPARTMENT");
+    const courseSelection = $("#COURSE");
+
+    department.on("change", function(event){
+        const selectedDepartment = $(this).val();
+        const courseOptions = $('#COURSE option');
+
+        courseOptions.hide();
+        courseSelection.val("Select Course");
+
+
+        if(selectedDepartment){
+
+
+            courseOptions.filter(function() {
+                return $(this).data('department') == selectedDepartment;
+            }).show();
+
+            console.log(courseOptions);
+
+        } else {
+            courseOptions.show();
+        }
+    });
+
+    courseSelection.on("change", function(event){
+        const selectedCourse = $(this).val();
+    });
+});
+</script>
 
 
 <!-- Script -->
