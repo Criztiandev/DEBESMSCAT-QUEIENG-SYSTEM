@@ -33,8 +33,21 @@ class ManageBatchController
     {
         try {
             $batchModel = self::getBaseModel();
-            $batch = $batchModel->find();
-            $res->status(200)->render(self::BASE_URL . "/screen.view.php", ["batch" => $batch]);
+            $batch_list = $batchModel->find();
+
+            $transformed_list = array_map(function ($item) {
+                $bookingModel = new Model("BOOKING");
+                $booking_list = $bookingModel->find(["BATCH_ID" => $item["BATCH_ID"],"STATUS" => "ACCEPTED"]);
+
+
+                return [
+                    ...$item,
+                    "BOOKING_COUNT" => count($booking_list),
+                ];
+
+            }, $batch_list);
+
+            $res->status(200)->render(self::BASE_URL . "/screen.view.php", ["batch" => $transformed_list]);
 
         } catch (\Exception $e) {
             $res->status(500)->json(["error" => "Failed to fetch batch: " . $e->getMessage()]);

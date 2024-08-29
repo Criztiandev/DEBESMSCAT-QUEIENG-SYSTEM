@@ -38,9 +38,22 @@ class StaffBatchController
             $department_credentials = $departmentModel->findOne(["OPERATOR_ID" => $UID]);
 
             $batchModel = self::getBaseModel();
-            $batch = $batchModel->find(["DEPARTMENT_ID" => $department_credentials["DEPARTMENT_ID"]]);
+            $batch_list = $batchModel->find(["DEPARTMENT_ID" => $department_credentials["DEPARTMENT_ID"]]);
 
-            $res->status(200)->render(self::BASE_URL . "/screen.view.php", ["batch" => $batch]);
+            $transformed_list = array_map(function ($item) {
+                $bookingModel = new Model("BOOKING");
+                $booking_list = $bookingModel->find(["BATCH_ID" => $item["BATCH_ID"],"STATUS" => "ACCEPTED"]);
+
+
+                return [
+                    ...$item,
+                    "BOOKING_COUNT" => count($booking_list),
+                ];
+
+            }, $batch_list);
+
+
+            $res->status(200)->render(self::BASE_URL . "/screen.view.php", ["batch" => $transformed_list]);
 
         } catch (\Exception $e) {
             $res->status(500)->json(["error" => "Failed to fetch batch: " . $e->getMessage()]);
